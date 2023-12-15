@@ -1,6 +1,17 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from app.db.engine import create_all
+from app.api.api_router import api_router
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_all()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
+app.include_router(api_router)
 
 
 @app.get("/")
