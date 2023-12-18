@@ -9,7 +9,7 @@ engine = create_engine(settings.DATABASE_URI, echo=True)
 
 
 def create_all():
-    Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine, checkfirst=True)
 
 
 def create_table_id(code: str):

@@ -1,5 +1,6 @@
 from app.models.parents import ParentsCreate, Parents
 from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 
 def add_parent(parent: ParentsCreate, db: Session):
@@ -12,3 +13,9 @@ def add_parent(parent: ParentsCreate, db: Session):
     db.commit()
     db.refresh(new_parent)
     return new_parent
+
+
+def get_all_parents(db: Session, skip: int = 0, limit: int = 100):
+    statement = select(Parents).offset(skip).limit(limit)
+    result = db.scalars(statement).all()
+    return result
