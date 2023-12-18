@@ -1,10 +1,11 @@
 from datetime import date
-from typing import Optional
+from typing import Optional, List
 from sqlalchemy import String, Date
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy.orm import mapped_column, Mapped, relationship
 from pydantic import BaseModel, Field
 
 from .base import Base
+from .linked_table import mentors_courses_link
 
 
 class Mentors(Base):
@@ -15,6 +16,8 @@ class Mentors(Base):
     birthday: Mapped[date] = mapped_column(Date, nullable=False)
     address: Mapped[Optional[str]] = mapped_column(String(100))
     phone: Mapped[str] = mapped_column(String(10))
+
+    courses: Mapped[List["Courses"]] = relationship(secondary=mentors_courses_link, back_populates="mentors")
 
 
 class MentorsBase(BaseModel):
@@ -38,8 +41,8 @@ class MentorsRead(MentorsBase):
 
 
 class MentorsUpdate(BaseModel):
-    full_name: Optional[str]
-    gender: Optional[str]
-    birthday: Optional[date]
-    address: Optional[str]
-    phone: Optional[str]
+    full_name: Optional[str] = Field(default=None)
+    gender: Optional[str] = Field(default=None)
+    birthday: Optional[date] = Field(default=None)
+    address: Optional[str] = Field(default=None)
+    phone: Optional[str] = Field(default=None)
