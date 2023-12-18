@@ -1,8 +1,9 @@
 from sqlalchemy import Integer, String, Date, ForeignKey
 from datetime import date
-from .base import Base
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 from pydantic import BaseModel
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from .base import Base
 
 
 class Students(Base):

@@ -6,7 +6,7 @@ from app.api.api_router import api_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    create_all()
+    # create_all()
     yield
 
 
